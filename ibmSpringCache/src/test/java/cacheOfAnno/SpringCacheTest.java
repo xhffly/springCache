@@ -48,6 +48,40 @@ public class SpringCacheTest {
         s.getAccountByName("somebody1");// 应该走缓存
         s.getAccountByName("somebody2");// 应该走缓存
     }
+
+    @Test
+    public void test03() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-anno.xml");
+        AccountService s = (AccountService) context.getBean("accountServiceBean");
+        s.getAccountByName("somebody");// 长度大于 4，不会被缓存
+        s.getAccountByName("sbd");// 长度小于 4，会被缓存
+        s.getAccountByName("somebody");// 还是查询数据库
+        s.getAccountByName("sbd");// 会从缓存返回
+    }
+
+    @Test
+    public void test04() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-anno.xml");
+        AccountService s = (AccountService) context.getBean("accountServiceBean");
+        s.getAccount("somebody", "123456", true);// 应该查询数据库
+        s.getAccount("somebody", "123456", true);// 应该走缓存
+        s.getAccount("somebody", "123456", false);// 应该走缓存
+        s.getAccount("somebody", "654321", true);// 应该查询数据库
+        s.getAccount("somebody", "654321", true);// 应该走缓存
+    }
+
+    @Test
+    public void test05() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-anno.xml");
+        AccountService s = (AccountService) context.getBean("accountServiceBean");
+        Account account = s.getAccountByName("cyh");
+        account.setPassword("123");
+        s.updateAccount2(account);
+        account.setPassword("321");
+        s.updateAccount2(account);
+        account = s.getAccountByName("cyh");
+        System.out.println(account.getPassword());
+    }
 }
 
 
