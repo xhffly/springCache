@@ -82,6 +82,47 @@ public class SpringCacheTest {
         account = s.getAccountByName("cyh");
         System.out.println(account.getPassword());
     }
+
+    /**
+     * 内部( this 引用)调用，缓存会失效
+     * @return
+     */
+    @Test
+    public void test06() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-anno.xml");
+
+        AccountService s = (AccountService) context.getBean("accountServiceBean");
+
+        s.getAccountByName2("cyh");
+        s.getAccountByName2("cyh");
+        s.getAccountByName2("cyh");
+    }
+
+    @Test
+    public void test07() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-anno.xml");
+
+        AccountService s = (AccountService) context.getBean("accountServiceBean");
+
+        s.getAccountByName("cyh");
+        s.getAccountByName("cyh");
+        try {
+            s.reload2();
+        } catch (Exception e) {
+        }
+        s.getAccountByName("cyh");
+    }
+
+    @Test
+    public void test08() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-dummy-cache-anno.xml");
+
+        AccountService s = (AccountService) context.getBean("accountServiceBean");
+
+        s.getAccountByName("cyh");
+        s.getAccountByName("cyh");
+        s.getAccountByName("cyh");
+    }
 }
 
 

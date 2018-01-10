@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/cache
+            http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <cache:annotation-driven/>
+
+    <bean id="accountServiceBean" class="cacheOfAnno.AccountService"/>
+
+    <!-- generic cache manager -->
+    <bean id="simpleCacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="default"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- dummy cacheManager  -->
+    <bean id="cacheManager" class="org.springframework.cache.support.CompositeCacheManager">
+        <property name="cacheManagers">
+            <list>
+                <ref bean="simpleCacheManager"/>
+            </list>
+        </property>
+        <!-- 找不到缓存就不做任何操作的标志位  true:启用之，会直接查询数据库  false:禁用之，会抛出异常 -->
+        <property name="fallbackToNoOpCache" value="false"/>
+    </bean>
+</beans>
