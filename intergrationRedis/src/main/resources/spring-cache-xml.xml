@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/cache  http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+
+    <!-- define caching behavior -->
+    <cache:advice id="cachingBehavior" cache-manager="cacheManager">
+        <cache:caching cache="commonCache">
+            <cache:cache-evict method="save" all-entries="true" before-invocation="true"/>
+            <cache:cache-evict method="delete"/>
+        </cache:caching>
+    </cache:advice>
+
+    <!-- apply the behavior to all the implementations of CustomerDataService interface  -->
+    <aop:config>
+        <aop:advisor advice-ref="cachingBehavior" pointcut="execution(* com.cyh..*.*(..))"/>
+    </aop:config>
+
+
+</beans>

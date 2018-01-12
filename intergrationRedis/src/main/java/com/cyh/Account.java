@@ -2,19 +2,26 @@ package com.cyh;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by Administrator on 2018/1/11.
  */
+@Entity
+@Table(name = "account")
 public class Account implements Serializable {
 
-    private int id;
+    @Id
+    private Integer id;
     private String name;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -28,7 +35,7 @@ public class Account implements Serializable {
 
     public Account() {}
 
-    public Account(int id, String name) {
+    public Account(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

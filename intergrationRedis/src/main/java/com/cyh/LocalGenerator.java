@@ -10,14 +10,12 @@ public class LocalGenerator implements KeyGenerator {
 
     @Override
     public Object generate(Object o, Method method, Object... objects) {
-
-        StringBuilder sb = new StringBuilder();
-        String className = o.getClass().getSimpleName();
-
-        sb.append(className + "-");
+        StringBuilder sb = new StringBuilder("authenticationCache");
         for (Object obj : objects) {
-            sb.append(obj.toString());
+            sb.append("_" + obj.toString());
         }
-        return sb.toString();
+        String key = sb.toString();
+        System.out.println("Generated key: " + key);
+        return key;
     }
 }
