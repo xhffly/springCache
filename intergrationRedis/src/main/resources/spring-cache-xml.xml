@@ -11,14 +11,15 @@
     <!-- define caching behavior -->
     <cache:advice id="cachingBehavior" cache-manager="cacheManager">
         <cache:caching cache="commonCache">
-            <cache:cache-evict method="save" all-entries="true" before-invocation="true"/>
+            <cache:cache-evict method="save" all-entries="true" before-invocation="true"
+                               key-generator="localGenerator"/>
             <cache:cache-evict method="delete"/>
         </cache:caching>
     </cache:advice>
 
     <!-- apply the behavior to all the implementations of CustomerDataService interface  -->
     <aop:config>
-        <aop:advisor advice-ref="cachingBehavior" pointcut="execution(* com.cyh..*.*(..))"/>
+        <aop:advisor advice-ref="cachingBehavior" pointcut="target(com.cyh.AccountRepository)"/>
     </aop:config>
 
 

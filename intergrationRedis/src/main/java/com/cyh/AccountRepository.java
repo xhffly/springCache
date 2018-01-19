@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
  * Created by CYH on 2018/1/12.
  */
 @Repository
+@ClearAuthenticationCache
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Cacheable(value = "commonCache", keyGenerator = "localGenerator")
