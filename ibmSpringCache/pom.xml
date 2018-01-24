@@ -8,6 +8,13 @@
     <artifactId>ibmSpringCache</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <file.encoding>UTF-8</file.encoding>
+        <aspectj.version>1.8.1</aspectj.version>
+        <aopalliance.version>1.0</aopalliance.version>
+        <spring-version>4.2.5.RELEASE</spring-version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -18,12 +25,48 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <Xlint>ignore</Xlint>
+                    <complianceLevel>1.8</complianceLevel>
+                    <encoding>UTF-8</encoding>
+                    <verbose>false</verbose>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
-
-    <properties>
-        <spring-version>4.2.5.RELEASE</spring-version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -41,11 +84,32 @@
             <artifactId>spring-context</artifactId>
             <version>${spring-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>${aopalliance.version}</version>
         </dependency>
     </dependencies>
 
