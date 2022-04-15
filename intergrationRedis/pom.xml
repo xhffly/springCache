@@ -23,7 +23,7 @@
     </build>
 
     <properties>
-        <spring-version>4.2.5.RELEASE</spring-version>
+        <spring-version>5.2.21.RELEASE</spring-version>
     </properties>
 
     <dependencies>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>1.6.2.RELEASE</version>
+            <version>1.6.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
