@@ -12,7 +12,7 @@
         <file.encoding>UTF-8</file.encoding>
         <aspectj.version>1.8.1</aspectj.version>
         <aopalliance.version>1.0</aopalliance.version>
-        <spring-version>4.2.5.RELEASE</spring-version>
+        <spring-version>5.2.22.RELEASE</spring-version>
     </properties>
 
     <build>
